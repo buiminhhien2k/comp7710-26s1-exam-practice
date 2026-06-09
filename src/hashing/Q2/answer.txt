@@ -1,0 +1,14 @@
+    @Override
+    public int hashCode() {
+        return 31 * Objects.hashCode(firstName) + Objects.hashCode(lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+
+        for (Customer c : queue) {
+            result = 31 * result + (c == null ? 0 : c.hashCode());
+        }
+        return result;
+    }

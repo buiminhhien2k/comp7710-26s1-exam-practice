@@ -1,0 +1,89 @@
+package warmup.Q4;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class FindUnion {
+
+    /**
+     * Finds the union of two integer arrays.
+     * The union is defined as the combined collection of all unique integers from both setA and setB.
+     * If a number appears in both input arrays, it must only appear ONCE in the result.
+     * Note: You may assume that the input arrays are valid mathematical sets.
+     * This means there are no duplicate numbers within setA itself, nor within setB itself.
+     * The order of the integers in the returned array does not matter.
+     *
+     * @param setA the first set of unique integers
+     * @param setB the second set of unique integers
+     * @return a new int[] containing all unique numbers from both sets combined
+     */
+    public static int[] find(int[] setA, int[] setB) {
+
+        Set<Integer> union = new HashSet<>();
+
+        for (int value : setA) {
+            union.add(value);
+        }
+
+        for (int value : setB) {
+            union.add(value);
+        }
+
+        int[] result = new int[union.size()];
+
+        int i = 0;
+        for (int value : union) {
+            result[i++] = value;
+        }
+
+        return result;
+    }
+}
+
+-------------------------------------------------------------------
+```java
+package warmup.Q4;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class FindIntersect {
+
+    /**
+     * Finds the intersection of two integer arrays.
+     * The intersection is defined as the collection of integers that appear in BOTH setA and setB.
+     * Note: You may assume that the input arrays are valid mathematical sets.
+     * This means there are no duplicate numbers within setA itself, nor within setB itself.
+     * The order of the integers in the returned array does not matter.
+     *
+     * @param setA the first set of unique integers
+     * @param setB the second set of unique integers
+     * @return a new int[] containing only the numbers present in both setA and setB
+     */
+    public static int[] find(int[] setA, int[] setB) {
+
+        Set<Integer> valuesInB = new HashSet<>();
+
+        for (int value : setB) {
+            valuesInB.add(value);
+        }
+
+        Set<Integer> intersection = new HashSet<>();
+
+        for (int value : setA) {
+            if (valuesInB.contains(value)) {
+                intersection.add(value);
+            }
+        }
+
+        int[] result = new int[intersection.size()];
+
+        int i = 0;
+        for (int value : intersection) {
+            result[i++] = value;
+        }
+
+        return result;
+    }
+}
+```

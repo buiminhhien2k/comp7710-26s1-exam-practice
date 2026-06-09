@@ -1,0 +1,62 @@
+class Employee {
+    private String firstName;
+    private String lastName;
+
+    public Employee(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+}
+
+class Manager extends Employee {
+    private List<Employee> employees;
+
+    public Manager(String firstName, String lastName) {
+        super(firstName, lastName); // Crucial: Must be the first line
+        this.employees = new ArrayList<>();
+    }
+
+    public void addEmployee(Employee employee) {
+        this.employees.add(employee);
+    }
+
+    public List<Employee> getEmployeeList() {
+        return employees;
+    }
+}
+
+class Company {
+    private List<Employee> allEmployees;
+
+    public Company() {
+        this.allEmployees = new ArrayList<>();
+    }
+
+    public void addEmployeeToCompany(Employee e) {
+        this.allEmployees.add(e);
+    }
+
+    public Employee getCEO() {
+        // Step 1: Collect all employees that are managed by someone
+        List<Employee> managedEmployees = new ArrayList<>();
+
+        for (Employee e : allEmployees) {
+            if (e instanceof Manager) {
+                Manager m = (Manager) e;
+                managedEmployees.addAll(m.getEmployeeList());
+            }
+        }
+
+        // Step 2: Find the one employee who is not in the managed list
+        for (Employee e : allEmployees) {
+            if (!managedEmployees.contains(e)) {
+                return e; // This is the CEO
+            }
+        }
+
+        return null; // Failsafe
+    }
+}

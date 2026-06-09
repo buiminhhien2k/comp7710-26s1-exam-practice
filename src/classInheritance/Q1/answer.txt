@@ -1,0 +1,154 @@
+package classInheritance.Q1;
+
+class Int implements Number {
+    private int value;
+
+    public Int(int value) { this.value = value; }
+    public int getValue() { return value; }
+
+    @Override
+    public boolean equalTo(Number n) {
+        if (n instanceof Int) {
+            return value == ((Int) n).getValue();
+        }
+
+        if (n instanceof Float) {
+            return value == ((Float) n).getValue();
+        }
+
+        return false;
+    }
+
+    @Override
+    public int comparedTo(Number n) {
+        float other;
+
+        if (n instanceof Int) {
+            other = ((Int) n).getValue();
+        } else if (n instanceof Float) {
+            other = ((Float) n).getValue();
+        } else {
+            throw new IllegalArgumentException("Unsupported Number type");
+        }
+
+        return java.lang.Float.compare(value, other);
+    }
+}
+--------------------------------------------------------------
+package classInheritance.Q1;
+
+class Float implements Number {
+    private float value;
+
+    public Float(double value) { this.value = (float) value; }
+    public Float(float value) { this.value = value; }
+    public float getValue() { return value; }
+
+    @Override
+    public boolean equalTo(Number n) {
+        if (n instanceof Float) {
+            return value == ((Float) n).getValue();
+        }
+
+        if (n instanceof Int) {
+            return value == ((Int) n).getValue();
+        }
+
+        return false;
+    }
+
+    @Override
+    public int comparedTo(Number n) {
+        float other;
+
+        if (n instanceof Float) {
+            other = ((Float) n).getValue();
+        } else if (n instanceof Int) {
+            other = ((Int) n).getValue();
+        } else {
+            throw new IllegalArgumentException("Unsupported Number type");
+        }
+
+        return java.lang.Float.compare(value, other);
+    }
+}
+
+------------------------------------------------------
+package classInheritance.Q1;
+
+class Sum implements Operation {
+    @Override
+    public Number execute(Number a, Number b) {
+        boolean isFloatA = a instanceof Float;
+        boolean isFloatB = b instanceof Float;
+
+        // Safely extract the primitive values by casting
+        float valA = isFloatA ? ((Float) a).getValue() : ((Int) a).getValue();
+        float valB = isFloatB ? ((Float) b).getValue() : ((Int) b).getValue();
+
+        // Satisfies Rule A: Return Float if either is Float, otherwise Int
+        if (isFloatA || isFloatB) {
+            return new Float(valA + valB);
+        } else {
+            return new Int((int) (valA + valB));
+        }
+    }
+}
+
+---------------------------------------------------
+package classInheritance.Q1;
+
+public class Subtract implements Operation{
+//    @Override
+    public Number execute(Number a, Number b) {
+        boolean isFloatA = a instanceof Float;
+        boolean isFloatB = b instanceof Float;
+
+        // Safely extract the primitive values by casting
+        float valA = isFloatA ? ((Float) a).getValue() : ((Int) a).getValue();
+        float valB = isFloatB ? ((Float) b).getValue() : ((Int) b).getValue();
+
+        // Satisfies Rule A: Return Float if either is Float, otherwise Int
+        if (isFloatA || isFloatB) {
+            return new Float(valA - valB);
+        } else {
+            return new Int((int) (valA - valB));
+        }
+    }
+}
+-------------------------------------------------------------
+package classInheritance.Q1;
+
+public class Multiply implements Operation {
+    @Override
+    public Number execute(Number a, Number b) {
+        boolean isFloatA = a instanceof Float;
+        boolean isFloatB = b instanceof Float;
+
+        // Safely extract the primitive values by casting
+        float valA = isFloatA ? ((Float) a).getValue() : ((Int) a).getValue();
+        float valB = isFloatB ? ((Float) b).getValue() : ((Int) b).getValue();
+
+        // Satisfies Rule A: Return Float if either is Float, otherwise Int
+        if (isFloatA || isFloatB) {
+            return new Float(valA * valB);
+        } else {
+            return new Int((int) (valA * valB));
+        }
+    }
+}
+------------------------------------------------------------------------
+
+package classInheritance.Q1;
+
+class Divide implements Operation {
+    @Override
+    public Number execute(Number a, Number b) {
+        // Must extract as float immediately to prevent integer division truncation
+        float valA = (a instanceof Float) ? ((Float) a).getValue() : ((Int) a).getValue();
+        float valB = (b instanceof Float) ? ((Float) b).getValue() : ((Int) b).getValue();
+
+        // Satisfies Rule B: Always return Float
+        return new Float(valA / valB);
+    }
+}

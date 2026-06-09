@@ -1,0 +1,36 @@
+    @Override
+    public int hashCode() {
+        int result = 17; // Start with a non-zero prime number (optional but good practice)
+
+        // Multiply by 31 and add the field's hash contribution
+        result = 31 * result + year;
+        result = 31 * result + (genre == null ? 0 : genre.hashCode());
+        result = 31 * result + (name == null ? 0 : name.hashCode());
+
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // 1. Reference equality (Memory optimization)
+        if (this == object) return true;
+
+        // 2. Null check and Type check
+        if (object == null || this.getClass() != object.getClass()) return false;
+
+        // 3. Cast to the correct type
+        BoardGame other = (BoardGame) object;
+
+        // 4. Primitive comparison
+        if (this.year != other.year) return false;
+
+        // 5. Enum comparison (can use == for enums safely)
+        if (this.genre != other.genre) return false;
+
+        // 6. Object comparison (String) with manual null safety
+        if (this.name == null) {
+            return other.name == null;
+        } else {
+            return this.name.equals(other.name);
+        }
+    }
